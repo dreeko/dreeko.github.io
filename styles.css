@@ -35,78 +35,81 @@ body{
   font-family:var(--sans); font-size:clamp(1rem,1.25vw,1.1rem); line-height:1.65;
   -webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:56rem;margin:0 auto;padding:clamp(2.5rem,7vw,6rem) clamp(1.25rem,5vw,2.5rem) 4rem}
+.wrap{max-width:58rem;margin:0 auto;padding:clamp(2.5rem,7vw,5rem) clamp(1.25rem,5vw,2.5rem) 3rem}
 a{color:inherit}
 
 /* ── masthead ─────────────────────────────────────────────── */
-.mast{margin-bottom:clamp(2.5rem,6vw,4.5rem)}
+.mast{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:1rem 1.5rem;margin-bottom:clamp(1.75rem,4vw,2.5rem);
+}
 h1{
   font-family:var(--serif); font-style:italic; font-weight:500;
-  font-size:clamp(2.6rem,7vw,5rem); line-height:1; letter-spacing:-.02em; margin:0 0 1rem;
+  font-size:clamp(2.1rem,5vw,3.2rem); line-height:1; letter-spacing:-.02em; margin:0;
 }
-.tagline{margin:0;max-width:34rem;color:var(--ink-soft);font-size:clamp(1rem,1.5vw,1.15rem)}
-.tagline strong{color:var(--ink);font-weight:600}
 
 /* ── summary bar ──────────────────────────────────────────── */
 .bar{
-  display:flex;flex-wrap:wrap;align-items:baseline;gap:.35rem 1rem;
-  padding:.85rem 1.1rem;margin-bottom:1.75rem;
-  background:var(--panel);border:1px solid var(--line-soft);border-radius:.7rem;
-  font-family:var(--mono);font-size:.85rem;
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .75rem;
+  padding:.6rem .9rem;
+  background:var(--panel);border:1px solid var(--line-soft);border-radius:.6rem;
+  font-family:var(--mono);font-size:.8rem;
 }
 .bar .headline{font-weight:500;letter-spacing:-.01em}
-.bar .meta{color:var(--ink-soft);margin-left:auto;font-size:.8rem}
+.bar .meta{color:var(--ink-soft);font-size:.74rem}
 .bar[data-state="down"]{border-color:var(--down);background:color-mix(in srgb,var(--down) 9%,var(--panel))}
 .bar[data-state="unknown"]{border-style:dashed;border-color:var(--line)}
 
-/* ── service list ─────────────────────────────────────────── */
-.label{
-  font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink-soft);margin:0 0 .75rem;
+/* ── service grid ─────────────────────────────────────────── */
+/* auto-fit keeps the cards honest at any width: 3 up on a desktop, 2 on a tablet,
+   1 on a phone, without a media query per breakpoint. */
+ul.services{
+  list-style:none;margin:0 0 2.5rem;padding:0;
+  display:grid;gap:.75rem;
+  grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));
 }
-ul.services{list-style:none;margin:0 0 3rem;padding:0;border-top:1px solid var(--line-soft)}
-li.svc{border-bottom:1px solid var(--line-soft)}
+li.svc{display:flex}
 li.svc>a{
-  display:grid;grid-template-columns:auto 1fr auto;gap:.35rem 1rem;align-items:baseline;
-  padding:1.15rem .25rem;text-decoration:none;transition:background .15s ease,padding .15s ease;
+  flex:1;display:flex;flex-direction:column;gap:.3rem;
+  padding:1rem 1.05rem;text-decoration:none;
+  background:var(--panel);border:1px solid var(--line-soft);border-radius:.6rem;
+  transition:border-color .15s ease,transform .15s ease;
 }
-li.svc>a:hover,li.svc>a:focus-visible{background:var(--panel);padding-left:.75rem;padding-right:.75rem}
-li.svc>a:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+li.svc>a:hover,li.svc>a:focus-visible{border-color:var(--line);transform:translateY(-2px)}
+li.svc>a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+/* A down card should be findable by shape, not just hue. */
+li.svc[data-status="down"]>a{border-color:var(--down);background:color-mix(in srgb,var(--down) 8%,var(--panel))}
+
+.row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
 
 .dot{
-  width:.6rem;height:.6rem;border-radius:50%;align-self:center;
+  width:.55rem;height:.55rem;border-radius:50%;flex:none;
   background:var(--unknown);box-shadow:0 0 0 3px color-mix(in srgb,var(--unknown) 22%,transparent);
   transition:background .2s ease,box-shadow .2s ease;
 }
 [data-status="up"] .dot{background:var(--up);box-shadow:0 0 0 3px color-mix(in srgb,var(--up) 22%,transparent)}
 [data-status="down"] .dot{background:var(--down);box-shadow:0 0 0 3px color-mix(in srgb,var(--down) 25%,transparent)}
 
-.name{font-weight:600;font-size:1.05rem;letter-spacing:-.01em}
-.host{font-family:var(--mono);font-size:.8rem;color:var(--ink-soft);white-space:nowrap}
-.blurb{grid-column:2/-1;margin:0;color:var(--ink-soft);font-size:.92rem;line-height:1.5}
-.pill{
-  grid-column:2/-1;justify-self:start;margin-top:.15rem;
-  font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);
-}
+.name{font-weight:600;font-size:1rem;letter-spacing:-.01em}
+.host{font-family:var(--mono);font-size:.75rem;color:var(--ink-soft);overflow-wrap:anywhere}
+.pill{font-family:var(--mono);font-size:.7rem;color:var(--ink-soft);margin-top:auto;padding-top:.35rem}
 [data-status="down"] .pill{color:var(--down);font-weight:500}
 
-/* Unlisted services: linked here for you, but kept out of search engines.
-   Pairs with their own X-Robots-Tag: noindex at the origin. */
+/* Origin-level posture, surfaced on the card: these carry X-Robots-Tag: noindex,
+   and their links here are rel="nofollow" so the front door doesn't undo that. */
 .tag{
-  font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+  font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--ink-soft);border:1px solid var(--line);border-radius:.3rem;
-  padding:.1rem .35rem;margin-left:.5rem;vertical-align:.12em;white-space:nowrap;
+  padding:.05rem .3rem;white-space:nowrap;
 }
 
 /* ── footer ───────────────────────────────────────────────── */
-footer{border-top:1px solid var(--line-soft);padding-top:1.5rem;color:var(--ink-soft);font-size:.85rem}
-footer p{margin:0 0 .6rem;max-width:44rem}
-footer code{font-family:var(--mono);font-size:.95em;color:var(--ink)}
-footer a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:.2em}
-footer a:hover{text-decoration-color:currentColor}
-
-@media (max-width:34rem){
-  li.svc>a{grid-template-columns:auto 1fr;row-gap:.3rem}
-  .host{grid-column:2/-1;white-space:normal}
+footer{
+  display:flex;flex-wrap:wrap;gap:.35rem 1rem;justify-content:space-between;
+  border-top:1px solid var(--line-soft);padding-top:1rem;
+  color:var(--ink-soft);font-family:var(--mono);font-size:.72rem;
 }
+footer a{color:var(--ink-soft);text-decoration-color:var(--line);text-underline-offset:.2em}
+footer a:hover{color:var(--ink);text-decoration-color:currentColor}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}

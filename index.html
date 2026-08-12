@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>dreeko.space — homelab services</title>
-<meta name="description" content="Public services running on a homelab in Perth, Western Australia, with a live status board.">
+<title>dreeko.space — status</title>
+<meta name="description" content="Live status of the public services running on a homelab in Perth, Western Australia.">
 <meta name="theme-color" content="#10221f" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0d1a18" media="(prefers-color-scheme: dark)">
 <link rel="canonical" href="https://dreeko.space/">
@@ -15,12 +15,11 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="dreeko.space">
-<meta property="og:title" content="dreeko.space — homelab services">
-<meta property="og:description" content="Public services running on a homelab in Perth, with a live status board.">
+<meta property="og:title" content="dreeko.space — status">
+<meta property="og:description" content="Live status of the public services running on a homelab in Perth.">
 <meta property="og:url" content="https://dreeko.space/">
 
-<!-- Deferred so it never blocks the directory rendering. The list below is static HTML;
-     this only fills in the live status pills. -->
+<!-- Deferred: the grid below is static markup, so it renders without this. -->
 <script src="status.js" defer></script>
 </head>
 <body>
@@ -28,82 +27,62 @@
 
   <header class="mast">
     <h1>dreeko.space</h1>
-    <p class="tagline">
-      Public services from a homelab in Perth, Western Australia. Everything here runs on
-      <strong>one machine</strong> at the end of a residential line, fronted by a small VPS
-      because the line has no public address of its own.
-    </p>
+    <!-- Starts "unknown", not optimistic: if the feed never loads, the honest state
+         is the one that stays on screen. -->
+    <div class="bar" id="bar" data-state="unknown">
+      <span class="headline" id="headline">Checking…</span>
+      <span class="meta" id="meta">contacting the status feed</span>
+    </div>
   </header>
 
-  <!-- Starts as "unknown" rather than optimistic: if the feed never loads, the honest
-       state is what stays on screen. -->
-  <div class="bar" id="bar" data-state="unknown">
-    <span class="headline" id="headline">Checking status…</span>
-    <span class="meta" id="meta">contacting the status feed</span>
-  </div>
-
-  <h2 class="label">Services</h2>
   <ul class="services">
 
     <li class="svc" data-id="forge" data-status="unknown">
       <a href="https://forge.dreeko.space/">
-        <span class="dot" aria-hidden="true"></span>
-        <span class="name">Forgejo</span>
+        <span class="row"><span class="dot" aria-hidden="true"></span><span class="name">Forgejo</span></span>
         <span class="host">forge.dreeko.space</span>
-        <p class="blurb">Git hosting and CI. The homelab documents and deploys itself from here.</p>
         <span class="pill">checking…</span>
       </a>
     </li>
 
-    <!-- rel="nofollow" on the two unlisted services: they are linked here for humans,
-         but they carry X-Robots-Tag: noindex at the origin and this keeps the front
-         door from undermining that. -->
+    <!-- rel="nofollow" on the two noindex services: linked here for humans, but the
+         front door shouldn't undermine their X-Robots-Tag at the origin. -->
     <li class="svc" data-id="arcana" data-status="unknown">
       <a href="https://arcana.dreeko.space/" rel="nofollow">
-        <span class="dot" aria-hidden="true"></span>
-        <span class="name">Bibliotheca Arcana<span class="tag">unlisted</span></span>
+        <span class="row"><span class="dot" aria-hidden="true"></span><span class="name">Bibliotheca Arcana</span><span class="tag">noindex</span></span>
         <span class="host">arcana.dreeko.space</span>
-        <p class="blurb">Semantic search across a curated occult library — full text, not just titles.</p>
         <span class="pill">checking…</span>
       </a>
     </li>
 
     <li class="svc" data-id="hortus" data-status="unknown">
       <a href="https://hortus.dreeko.space/" rel="nofollow">
-        <span class="dot" aria-hidden="true"></span>
-        <span class="name">Hortus Arcanus<span class="tag">unlisted</span></span>
+        <span class="row"><span class="dot" aria-hidden="true"></span><span class="name">Hortus Arcanus</span><span class="tag">noindex</span></span>
         <span class="host">hortus.dreeko.space</span>
-        <p class="blurb">A digital garden grown from that library's embedding index, and largely self-tending.</p>
         <span class="pill">checking…</span>
       </a>
     </li>
 
     <li class="svc" data-id="link" data-status="unknown">
       <a href="https://link.dreeko.space/">
-        <span class="dot" aria-hidden="true"></span>
-        <span class="name">Shlink</span>
+        <span class="row"><span class="dot" aria-hidden="true"></span><span class="name">Shlink</span></span>
         <span class="host">link.dreeko.space</span>
-        <p class="blurb">URL shortener. Following a link is public; creating one is not.</p>
         <span class="pill">checking…</span>
       </a>
     </li>
 
     <li class="svc" data-id="chat" data-status="unknown">
       <a href="https://chat.dreeko.space/">
-        <span class="dot" aria-hidden="true"></span>
-        <span class="name">Element<span class="tag">invite only</span></span>
+        <span class="row"><span class="dot" aria-hidden="true"></span><span class="name">Element</span><span class="tag">invite</span></span>
         <span class="host">chat.dreeko.space</span>
-        <p class="blurb">Matrix client for a private homeserver, bridged to the usual chat networks.</p>
         <span class="pill">checking…</span>
       </a>
     </li>
 
     <li class="svc" data-id="dreekome" data-status="unknown">
       <a href="https://dreeko.me/">
-        <span class="dot" aria-hidden="true"></span>
-        <span class="name">Keegan Ott</span>
+        <span class="row"><span class="dot" aria-hidden="true"></span><span class="name">Keegan Ott</span></span>
         <span class="host">dreeko.me</span>
-        <p class="blurb">Personal site. Different domain, same machine — so it shares this fate.</p>
         <span class="pill">checking…</span>
       </a>
     </li>
@@ -111,16 +90,8 @@
   </ul>
 
   <footer>
-    <p>
-      Status is probed every 60&nbsp;seconds from the edge VPS and published at
-      <code>status.dreeko.space</code>. This page is hosted on GitHub Pages on purpose:
-      every service above is proxied through that one VPS, so a status board living
-      beside them would go dark in exactly the outage worth reporting.
-    </p>
-    <p>
-      Probes run from inside the edge, so they exercise the proxy, the private network hop
-      and the application — but not public DNS. If you are reading this, that part works.
-    </p>
+    <span>probed from ko-vps-01 · every 60s</span>
+    <a href="https://status.dreeko.space/status.json">status.json</a>
   </footer>
 
 </div>
